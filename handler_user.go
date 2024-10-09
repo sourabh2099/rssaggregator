@@ -34,6 +34,13 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 	responseWithJSON(w, 200, databaseUserToUser(user))
 }
 func (apiCfg *apiConfig) handlerGetUserByAPIKey(w http.ResponseWriter, r *http.Request, user database.User) {
-	 
-	responseWithJSON(w,200,databaseUserToUser(user))
+	responseWithJSON(w, 200, databaseUserToUser(user))
+}
+
+func (apiConfig *apiConfig) handlerGetAllUsers(w http.ResponseWriter, r *http.Request) {
+	users, err := apiConfig.DB.GetAllUsers(r.Context())
+	if err != nil{
+		responseWithError(w,400,fmt.Sprintf("Unable to fetch user data: %v",err))
+	}
+	responseWithJSON(w,200,users);
 }

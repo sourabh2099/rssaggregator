@@ -20,7 +20,6 @@ func (apiCfg *apiConfig) middlewareAuth(handler authHandler) http.HandlerFunc {
 		if err != nil {
 			responseWithError(w, 400, fmt.Sprintf("Couldn't get user: %v", err))
 		}
-		responseWithJSON(w, 200, databaseUserToUser(user))
 		handler(w, r, user)
 	}
 
